@@ -1,0 +1,18 @@
+# Refs
+# https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
+# https://markheath.net/post/deploying-azure-functions-with-azure-cli
+
+az login
+az account set --subscription "Visual Studio Professional with MSDN"
+
+$resourceGroup = "rg-WebSite1"
+$location = "westeurope"
+az group create -n $resourceGroup -l $location
+
+# $rand = Get-Random -Minimum 10000 -Maximum 99999
+$appInsightsName = "ai-WebSite1-20200102"
+
+az resource create `
+  -g $resourceGroup -n $appInsightsName `
+  --resource-type "Microsoft.Insights/components" `
+  --properties '{\"Application_Type\":\"web\"}'
