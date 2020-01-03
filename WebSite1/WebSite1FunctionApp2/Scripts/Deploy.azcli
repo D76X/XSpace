@@ -1,0 +1,8 @@
+# Refs
+# https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
+# https://markheath.net/post/deploying-azure-functions-with-azure-cli
+
+az login
+az account set --subscription "Visual Studio Professional with MSDN"
+az account show
+

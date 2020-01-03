@@ -1,0 +1,33 @@
+# Refs
+# https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
+# https://markheath.net/post/deploying-azure-functions-with-azure-cli
+# https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website
+# https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-host
+# https://docs.microsoft.com/en-us/azure/media-services/latest/cli-upload-file-asset
+
+# $rand = Get-Random -Minimum 10000 -Maximum 99999
+
+az login
+az account set --subscription "Visual Studio Professional with MSDN"
+
+$location = "westeurope"
+$resourceGroup = "rg-WebSite1" # resource group of the website
+$storageAccountName = "sawebsite120200103" # Storage Account to hold the WebSite static content
+$scriptPath=Get-Location
+$sourcePath = "${scriptPath}\Contents"
+$destination = '$web' # notice the '' to store the value as a literal!
+
+az storage blob upload-batch `
+-s $sourcePath `
+-d $destination `
+--account-name $storageAccountName
+
+# -----------------------------------------------------------------------------------------------
+# Comments
+
+# test paths
+# $scriptPath=Get-Location
+# (get-item $scriptPath).parent.FullName
+# $sourcePath = '..\Contents'                            # does not work
+# $sourcePath = 'C:\VSProjects\XSpace\WebSite1\Contents' # works
+

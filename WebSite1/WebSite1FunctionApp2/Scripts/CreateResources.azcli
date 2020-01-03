@@ -5,10 +5,15 @@
 az login
 az account set --subscription "Visual Studio Professional with MSDN"
 
+# web site resources
+$appInsightsName = "ai-WebSite1-20200102"
+
+# resource group of the function app assets
 $resourceGroup = "rg-WebSite1FunctionApp2"
 $location = "westeurope"
 az group create -n $resourceGroup -l $location
 
+# storage account for the function app
 #$rand = Get-Random -Minimum 10000 -Maximum 99999
 $storageAccountName = "sawebsite1functionapp2"
 
@@ -17,3 +22,14 @@ az storage account create `
   -l $location `
   -g $resourceGroup `
   --sku Standard_LRS
+
+# the function app
+$functionAppName = "fa-WebSite1FunctionApp2"
+
+az functionapp create `
+  -n $functionAppName `
+  --storage-account $storageAccountName `
+  --consumption-plan-location $location `
+  --app-insights $appInsightsName `
+  --runtime dotnet `
+  -g $resourceGroup
