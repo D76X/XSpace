@@ -2,30 +2,31 @@
 # https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
 # https://markheath.net/post/deploying-azure-functions-with-azure-cli
 
+#$rand = Get-Random -Minimum 10000 -Maximum 99999
+
 az login
 az account set --subscription "Visual Studio Professional with MSDN"
 
 # web site resources
-$appInsightsName = "ai-WebSite1-20200102"
+$appInsightsName = "ai-WebSite1-20200102" 
+$resourceGroup = "rg-WebSite1" # resource group of the website
+# Note : https://docs.microsoft.com/en-us/cli/azure/functionapp?view=azure-cli-latest#az-functionapp-create
+# a function app can be attached to an instance of application insights but only this is in the same RG.
 
 # resource group of the function app assets
-$resourceGroup = "rg-WebSite1FunctionApp2"
 $location = "westeurope"
-az group create -n $resourceGroup -l $location
+$storageAccountName = "sawebsite1fa2202003011" # storage account for the function app
+$functionAppName = "fa-WebSite1FunctionApp2" # the function app
 
-# storage account for the function app
-#$rand = Get-Random -Minimum 10000 -Maximum 99999
-$storageAccountName = "sawebsite1functionapp2"
-
+# create the storage account for this function app
 az storage account create `
   -n $storageAccountName `
   -l $location `
   -g $resourceGroup `
+  --kind StorageV2 `
   --sku Standard_LRS
 
-# the function app
-$functionAppName = "fa-WebSite1FunctionApp2"
-
+# create the function app notice the --consumption-plan-location
 az functionapp create `
   -n $functionAppName `
   --storage-account $storageAccountName `

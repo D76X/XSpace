@@ -4,6 +4,7 @@
 # https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website
 # https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-host
 # https://docs.microsoft.com/en-us/azure/media-services/latest/cli-upload-file-asset
+# https://stackoverflow.com/questions/9725521/how-to-get-the-parents-parent-directory-in-powershell
 
 # $rand = Get-Random -Minimum 10000 -Maximum 99999
 
@@ -21,6 +22,13 @@ az storage blob upload-batch `
 -s $sourcePath `
 -d $destination `
 --account-name $storageAccountName
+
+# Find the website URL by using the Azure CLI
+az storage account show `
+-n $storageAccountName `
+-g $resourceGroup `
+--query "primaryEndpoints.web" `
+--output tsv
 
 # -----------------------------------------------------------------------------------------------
 # Comments
