@@ -9,7 +9,7 @@ az account set --subscription "Visual Studio Professional with MSDN"
 az account show
 
 $resourceGroup = "rg-WebSite1" # resource group of the website
-$functionAppName = "fa-WebSite1FunctionApp2" # the function app
+$functionAppName = "fa-ntt-fa1webapp1" # the function app
 
 $scriptPath=Get-Location
 $siteName="WebSite1"
