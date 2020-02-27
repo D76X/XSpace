@@ -15,6 +15,10 @@ Refs
 | ------- | ------- |
 | docker inspect [any_docker_assets_id/name] | Get all the Doker info relevant to the docker asset with the given id/name i.e. service, task, network. |
 
+| Command | Results |
+| ------- | ------- |
+
+
 ### Swarm
 
 | Command | Results |
@@ -25,6 +29,8 @@ Refs
 | docker info \| sls [Swarm]| Get only the [Swarm] info from the Doker info on the current node (**sls** works on Windows nodes). |
 | docker swarm join-token [worker\|manager] | Requests a worker or manager join token to add a node to a swarm cluster. |
 | docker swarm join --token [join-token] [IP:PORT] | Join the current node to a swarm cluster. |
+| docker swarm leave | Remove the **current** node from the swarm. |
+| docker node rm [node_id/node_namename] | Remove the node that is in DOWN state, use **--force** to forcibly remove a node which is NOT in DOWN state. |
 
 ### Swarm Services
 
@@ -45,7 +51,9 @@ Refs
 | docker service update --publish-rm 8080 [service_name] | Remove a swarm published port for a service .|
 | docker service update --publish-add mode=host,published=8090,target=8080 [service_name] [image_name] | Updates a published service to publish mode **host**. Each container of the service is going to be available on port 8090 of the corresponding node which is mapped to port 8080 of the container.|
 | docker service update --publish-add mode=host,target=8080 [service_name] [image_name] | The same as above but the published port is going to be randomly assigned.|
-| docker service  |  |
+| docker service rm| Remove a service (the definition of a service) from a swarm. This means that the Docker engine will no longer try to match its desired state on the swarm cluster.|
+| docker service scale [service_name]=0| Remove a service by setting its replication value to 0. However, the definition of the service is NOT removed from the swarm. This means that a later scale up is possible.|
+| docker service scale [service_name]=3| Updates the service definition to a REPLICA SET of 3.|
 
 
 ### Swarm Networks
