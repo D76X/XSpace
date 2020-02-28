@@ -54,8 +54,8 @@ Refs
 | docker service inspect [service_name] --pretty | Show details about a service. |
 | docker service inspect [task_id] --pretty | Show details about the service's task with the given id. |
 | docker service create --name [service_name] -p target=80 [nginx] | Create a service on a swarm from the image nginx published on a **random** swarm port and mapped to port 80 on the container. |
-| docker service docker service create --name [service_name] -p 9000:80 [nginx] | As above but port 9000 on the node is mapped to 80 on the container. |
-| docker service docker service create --name [service_name] -p 9000:80 [nginx] --constraint node.hostname==w4 | As above a **contraint** is added to the definition of the service so that only nodes that satisfy the constraint can be used to allocate the container. |
+| docker service create --name [service_name] -p 9000:80 [nginx] | As above but port 9000 on the node is mapped to 80 on the container. |
+| docker service create --name [service_name] -p 9000:80 [nginx] --constraint node.hostname==w4 | As above a **contraint** is added to the definition of the service so that only nodes that satisfy the constraint can be used to allocate the container. |
 
 | Command | Results |
 | ------- | ------- |
@@ -99,19 +99,109 @@ Refs
 | ------- | ------- |
 | docker service rm| Remove a service (the definition of a service) from a swarm. This means that the Docker engine will no longer try to match its desired state on the swarm cluster.|
 
+- https://app.pluralsight.com/course-player?clipId=f8ded8a9-abcf-4423-937d-24ba6be8b701
+
+### Swarm Service Logs
+
+-- https://app.pluralsight.com/course-player?clipId=f8ded8a9-abcf-4423-937d-24ba6be8b701
+
+When an app runs in a container it may log to the output stream of the container, The following command then makes it possible to look at the output stream of any containers used by a service on the swarm.
+
+| Command | Results |
+| ------- | ------- |
+| docker service logs [service_name] | Stream the logs for the service from any **manager** node of the swarm.|
+
 ---
 
 ### Swarm Networks
 
+- https://app.pluralsight.com/course-player?clipId=74581a4d-8a46-47e3-b51b-382789101016   
+- https://app.pluralsight.com/course-player?clipId=564cf8a5-1ce8-4432-bae4-883b129fb869
+
+When you create a service on a swam that is partitioned over multiple containers (tasks) these are by default all connected to the default `ingress overlay network` which is created for you by the Docker Engine when the service is deployed by means of the `docker service create` command. However, this network is a `service network` used by the Docker Engine to run the service and it has the only purpose to allow requests from outside the swarm (client requests) to be routed to the nodes of the swarm where the service's cantaiers have been deployed. It **must** not be used in any other way. 
+
+If you need to make sure the containers of a service can talk to each other i.e. when some containers are for the front end tier of the app and some other are for the frontend tier and you need the former to be able to talk to the latter then all these containers must be place on the same netweok. On a single node service deplyment a bridge netwok would suffice but with a swarm these newtwork must be an overlay network scoped to teh swarm as a bridge network cannot do that. 
+
+Make sure that the value passed to the --subnet flag does not collide with any existing subnets which are already in use. 
+
 | Command | Results |
 | ------- | ------- |
+| docker network ls | Lists all the networks that the current node is connected to.|
 | docker network inspect [ingress/network_name] --pretty | Show details about a network on the swarm cluster i.e. the ingress network.|
+| docker network create --driver overlay --subnet=10.0.9.0/24 frontend | Creates a swarm network named `frontend` and using the `overlay driver` so that it can be scoped to a swarm.|
+
+---
+
+### Swarm & Service Examples
+
+#### Example 1
+
+1. On a node where the Docker Engine is present create a swarm. This will automatically elected to **Master node with Leader Role**. When a swarm is created the Docker Engine automatically creates the `overlay` network `ingress` that is used only by the Docker Engine to route external request to services deployed to the swarm. 
+
+```
+docker swarm init
+```
+
+2. On the **Master node with Leader Role** (or any **Master Node** even if it is not the leader node of the swarm) use the following to request a join token that will be used to add nodes to the swarm as required.
+
+- To obtain a join token for a node that must be a master node use :
+
+```
+docker swarm join-token manager
+```
+
+- To obtaina join token for a node that must be a worker node use :
+
+```
+docker swarm join-token worker
+```
+
+3. On any other node that you would like to add to the swarm use the following to join the node to the swarm as either a worker node or a master node. This connects the node to the `ingress overlay network` of the swarm.
+
+```
+docker swarm join --token [join-token] [IP:PORT]
+```
+
+4. From a master node on the swarm create a `overlay` network `scoped to the swarm`. This overlay network will be used to connect the containers of the tasks run by a service. Make sure this overlay network for the service is defined on a subnet that is not in used on the infrastructure in the example `--subnet=10.0.9.0/24`. In the example belo this network is named `frontend`.
+
+```
+docker network create --driver overlay --subnet=10.0.9.0/24 frontend
+```
+
+5. On any master node of the swarm create a `service definition` and if required make the **containers** of the taks for the service join the `service network`, which in this example has been named `backend`. This allows the containers to find each other through the `docker dns service`. In the following example a service definition is created on the swarm of the node on which the command is run. The service definition states that `myfrontendservice` is based on the image `myrepository/myimage-frontend:tag` and any container that is going to be created on any node of the swarm will bind its port 3000 to the port 5000 of the hosting node. 
+
+The containers will also join the `backend` network that was previously defined on the swarm. Any container created and allocated by the scheduler to run this service will be able to communicate directly with others container of the same service which are also going to be on the same network. The Docker engine provides a **load balancer** on such a network to **round robin** the request amongst the containers for the service.
+
+The `--env-add BACKEND-EP:mybackendservice:3000` fragment makes available an `environment variable` to any container of the `myfrontendservice`. Notice that its value is `mybackendservice:3000` which is to be intended as `HOST:PORT` where the `HOST` is set to the value `mybackendservice`. The frontend app then will use this env variable to set its base address for the backend it calls to. When any of the apps of the frontend service containers makes calles to `http://mybackendservice:3000` the `DNS` service of the `backend` overlay network resolves to the IP address of any of the containers for the backend service through a load balancer in the usual round robin fashion. This `backend` overlay network `DNS` is capable to `route host names that are service names`. 
+
+```
+docker service create -name myfrontendservice `
+-p 5000:3000 `
+--network backend `
+--env-add BACKEND-EP:mybackendservice:3000
+myrepository/myimage-frontend:tag
+```
+
+6. Now that the `front end service` has been declared and made available on port 5000 of any node of teh swarm that is host to a container from the image `myrepository/myimage:tag`, it is possible to repeat teh procedure to create a `backend service` that is connected to the same `backend` network. However, this time the service does not require the hosting nodes to have any of their external ports mapped to the containers mapped in them as these need not to be reached externally. Only the containers of the `front end service` need to be able to find the containers of the `backend service` and for this it's sufficent to share the same `frontend overlay netwok`.
+
+```
+docker service create -name mybackendservice `
+--network frontend `
+myrepository/myimage-backend:tag
+```
+
+7. Inspect the services available on the swarm from any of ots master nodes with the following command. 
+
+```
+docker service ls
+```
 
 ---
 
 ## Watch Commands
 
-- https://superuser.com/questions/191063/what-is-the-windows-analog-of-the-linux-watch-command
+- https://superuser.com/questions/191063/what-is-the-windows-analog-of-the-linux-watch-command  
+- https://github.com/moby/moby/issues/27147
 
 | Command | Results |
 | ------- | ------- |
