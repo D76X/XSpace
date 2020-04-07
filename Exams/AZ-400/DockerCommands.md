@@ -198,6 +198,12 @@ docker service ls
 
 ---
 
+### Stacks
+
+Stacks are collections of related Docker Services which can be managed as a single deployment.
+
+---
+
 ## Watch Commands
 
 - https://superuser.com/questions/191063/what-is-the-windows-analog-of-the-linux-watch-command  
