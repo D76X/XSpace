@@ -8,14 +8,13 @@ az login
 az account set --subscription "Visual Studio Professional with MSDN"
 az account show
 
-$resourceGroup = "rg-WebSite1" # resource group of the website
-$functionAppName = "fa-ntt-fa1ws1" # the function app
+$resourceGroup = "rg-WebSite1" # resource group of the website and the corrisponding function apps
+$functionAppName = "fa-ntt-fa1ws1" # the function app name on Azure
 
 $scriptPath=Get-Location
-$siteName="WebSite1"
 $projectName="fa1ws1"
 $projectFile="${projectName}.csproj"
-$projectFolder = "${scriptPath}\${siteName}\${projectName}"
+$projectFolder = "${scriptPath}\FunctionApps\${projectName}"
 $targetFramework="netcoreapp3.0"
 $publishFolder = "${projectFolder}\bin\Release\${targetFramework}\publish"
 $project = "${projectFolder}\${projectFile}"
