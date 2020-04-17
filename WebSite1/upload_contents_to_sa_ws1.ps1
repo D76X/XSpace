@@ -4,6 +4,8 @@
 # https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website
 # https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website-host
 # https://docs.microsoft.com/en-us/azure/media-services/latest/cli-upload-file-asset
+# https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-cli
+# https://docs.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest
 # https://stackoverflow.com/questions/9725521/how-to-get-the-parents-parent-directory-in-powershell
 
 # $rand = Get-Random -Minimum 10000 -Maximum 99999
