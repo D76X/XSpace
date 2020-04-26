@@ -7,7 +7,7 @@ This document collects all the information related to the WebSite1 project.
 
 ## Features of the WebSite1
 
-1. The application serves static content from Azure Blob Storage, and implements an API using Azure Functions. 
+1. The application serves static content from Azure Blob Storage and implements an API using Azure Functions. 
 
 ---
 
@@ -70,9 +70,40 @@ You can use these proxies to
 
 1. Break a large API into multiple function apps (as in a microservice architecture), while still presenting a single API surface for clients.
 
-2. When a **Storage Account For Static Content** is used in conjuction to a function app it is...
+2. When a **Storage Account For Static Content** is used in conjuction to a function app it is possible to set up a proxy to a function so that the consumer of the function can invoke it via the URI of the proxy rather than the end point of the function itself. This is further illustrated by the examples below.
 
-Static content for the site is stored in **a Storage Account** and it is served to clients via Proxied Azure Functions this... 
+In order to set up proxies for some or all the functions in a **Azure Functions App** it is sufficient to use a **proxies.json** file located at the route of the project folder where the **myfunction.csproj** file resides.
+
+---
+
+#### Proxy Example 1
+
+```
+{
+    "$schema": "http://json.schemastore.org/proxies",
+    "proxies": {
+        "proxy1": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/"
+            },
+            "backendUri": "https://sawebsite120200103.z6.web.core.windows.net/"
+        }
+    }
+}
+         
+```
+
+In the code exerpt above which is taken from the file **proxies.json** a proxy with the **friendly name** _proxy1_ is placed in front of the route address of the function app **"/"**. 
+
+This proxy allows the following mappings.
+
+|Called URI|Proxied to URI|
+|:---:|:---:|
+|GET https://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120200103.z6.web.core.windows.net/|
+|GET http://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120200103.z6.web.core.windows.net/|
+
+ The address https://sawebsite120200103.z6.web.core.windows.net/ in turn is the base address of a **Storage Account** on which the **Static Content** feature is enabled. This is tuen means that when teh proxy relays from the requested URI to its backend URI the **index.html** document in the **$web** blob container of this storage account is retrieved and returned to the caller. 
 
 ---
 
