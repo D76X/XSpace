@@ -7,6 +7,13 @@
                 "route": "/"
             },
             "backendUri": "https://sawebsite120200103.z6.web.core.windows.net/"
+        },
+        "proxy2": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/{*restOfPath}"
+            },
+            "backendUri": "https://sawebsite120200103.z6.web.core.windows.net/{restOfPath}"
         }
     }
 }

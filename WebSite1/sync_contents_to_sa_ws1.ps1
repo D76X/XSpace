@@ -25,23 +25,23 @@
 # https://github.com/Azure/azure-storage-azcopy/issues/470
 # https://github.com/Azure/azure-storage-azcopy/issues/220
 
-$destinationPath = "${destinationPath}/?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-04-17T21:48:13Z&st=2020-04-17T13:48:13Z&spr=https&sig=0JG%2B5%2Ff1o8s7ueNoue84n5roF8cCxpVKyd6PZz%2BDJV4%3D"
+# Attain credentials for the current Powershell session by logging to the Azure AD
+# tenant for the subscription of the storage accountto to which the content of the local 
+# folder must be synced. Then by means of this authentication credentials request a SAS a 
+# token in order to access the storage account AD tenant with enough permissions to allow
+# the sync to happen. This is an interactive log-in.
 
-#az login
-#az account set --subscription "Visual Studio Professional with MSDN"
+Connect-AzureRmAccount "Visual Studio Professional with MSDN"
 
 $storageAccountName = "sawebsite120200103"
 $resourceGroup = "rg-WebSite1" # resource group of the website
 $storKey = (Get-AzureRmStorageAccountKey -ResourceGroupName $resourceGroup -Name $storageAccountName).Value[0]
 $storContext = New-AzureStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storKey
 $sasToken = New-AzureStorageAccountSASToken -Service Blob -ResourceType Service,Container,Object -Permission "rwdlaup" -Protocol HttpsOnly -Context $storContext
-
 $scriptPath=Get-Location
 $sourcePath = "${scriptPath}\Contents"
 $containerName = '$web' # notice the '' to store the value as a literal!
-
 $destinationPath = "https://${storageAccountName}.blob.core.windows.net/${containerName}/${sasToken}"
-
 # notice that recursive is on by default
 C:\"Program Files"\AzCopy\azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false
 

@@ -105,8 +105,41 @@ This proxy allows the following mappings.
 
  The address https://sawebsite120200103.z6.web.core.windows.net/ in turn is the base address of a **Storage Account** on which the **Static Content** feature is enabled. This is tuen means that when teh proxy relays from the requested URI to its backend URI the **index.html** document in the **$web** blob container of this storage account is retrieved and returned to the caller. 
 
+
+#### Proxy Example 2
+
+```
+...
+"proxy2": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/{*restOfPath}"
+            },
+            "backendUri": "https://sawebsite120200103.z6.web.core.windows.net/{restOfPath}"
+        }
+        ...
+```
+
+In this example a new proxy element named **proxy2** is added to the collection **"proxies"** in the **proxies.json** document. This new proxy makes use of the **{\*restOfPath}** parameter in the **route** so that any trailing parts of the path following the route address of the function app matches the value of this paramter. This value is then reused in the **backendUri** specification of the proxy to relay to the URI of the resource placed in the **$web** blob container holding the static content.
+
+That is **functionappbaseaddress/test** is going to be prozied to **storageAccountBaseAddress/test.html** and so on.
+
 ---
 
+## Sync of the Contents Folder
 
+In this inmplementation a **WebSite1/Content** folder is used to hold all the static content for the static content of the site.
+
+```
+sync_contents_to_sa_ws1.ps1
+```
+
+The sctript **sync_contents_to_sa_ws1.ps1** is used to sync the folder on the local PC to the **$web** blob container of the storage account that is used to hold the static content. This script makes use of the freely available **azcopy.exe**. More information is available in the Refs embedded in the script file.
+
+In order to run the script use **ConEmu** and the command below to start a new session of the **Powwrshell** console in **admin** mode.
+
+```
+powershell -new_console:a
+```
 
 ---
