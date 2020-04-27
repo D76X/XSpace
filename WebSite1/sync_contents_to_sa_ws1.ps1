@@ -31,7 +31,7 @@
 # token in order to access the storage account AD tenant with enough permissions to allow
 # the sync to happen. This is an interactive log-in.
 
-Connect-AzureRmAccount "Visual Studio Professional with MSDN"
+Connect-AzureRmAccount -Subscription "Visual Studio Professional with MSDN"
 
 $storageAccountName = "sawebsite120200103"
 $resourceGroup = "rg-WebSite1" # resource group of the website

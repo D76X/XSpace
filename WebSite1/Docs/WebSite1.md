@@ -128,18 +128,37 @@ That is **functionappbaseaddress/test** is going to be prozied to **storageAccou
 
 ## Sync of the Contents Folder
 
-In this inmplementation a **WebSite1/Content** folder is used to hold all the static content for the static content of the site.
+In this inmplementation a **WebSite1/Content** folder is used to hold all the static content of the site.
 
 ```
 sync_contents_to_sa_ws1.ps1
 ```
 
-The sctript **sync_contents_to_sa_ws1.ps1** is used to sync the folder on the local PC to the **$web** blob container of the storage account that is used to hold the static content. This script makes use of the freely available **azcopy.exe**. More information is available in the Refs embedded in the script file.
+The sctript **sync_contents_to_sa_ws1.ps1** is used to sync the folder on the local PC to the **$web** blob container of the storage account that is used to hold the static content. This script makes use of the freely available **azcopy.exe**. 
 
-In order to run the script use **ConEmu** and the command below to start a new session of the **Powwrshell** console in **admin** mode.
+The **azcopy.exe** must be present on the system from which the static content is synched. This executable can be simply downloaded and copied over to the target system and does not need to be installed on it. 
+
+For eample it may reside on the target system at the following path and used as it is in the **sync_contents_to_sa_ws1.ps1** or scripts which has similar goal.
+
+```
+C:\"Program Files"\AzCopy\azcopy.exe
+
+```
+
+More information is available in the Refs embedded in the script file.
+
+In order to run the script use **ConEmu** and the command below to start a new session of the **Powwrshell** console in **admin** mode and make sure the working directory of the script is ```C:\VSProjects\XSpace\WebSite1```.
 
 ```
 powershell -new_console:a
 ```
+
+In the Powershell session it is now possible to invoke the execution of the script directly like below.
+
+```
+.\sync_contents_to_sa_ws1.ps1
+```
+
+As this particular script makes use of a **interactive authentication** the user who executes it is going to be prompted to enter their credentials on each run and verify their ID through MFA via their Authenitcator application that is installed on theuir phones.
 
 ---
