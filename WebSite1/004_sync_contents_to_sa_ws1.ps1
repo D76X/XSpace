@@ -33,7 +33,7 @@
 
 Connect-AzureRmAccount -Subscription "Visual Studio Professional with MSDN"
 
-$storageAccountName = "sawebsite120200103"
+$storageAccountName = "sawebsite120201221"
 $resourceGroup = "rg-WebSite1" # resource group of the website
 $storKey = (Get-AzureRmStorageAccountKey -ResourceGroupName $resourceGroup -Name $storageAccountName).Value[0]
 $storContext = New-AzureStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storKey

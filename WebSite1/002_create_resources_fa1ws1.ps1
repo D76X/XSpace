@@ -8,14 +8,14 @@ az login
 az account set --subscription "Visual Studio Professional with MSDN"
 
 # web site resources
-$appInsightsName = "ai-WebSite1-20200102" 
+$appInsightsName = "ai-WebSite1-20201221" 
 $resourceGroup = "rg-WebSite1" # resource group of the website
 # Note : https://docs.microsoft.com/en-us/cli/azure/functionapp?view=azure-cli-latest#az-functionapp-create
-# a function app can be attached to an instance of application insights but only this is in the same RG.
+# a function app can be attached to an instance of application insights but only if this is in the same RG.
 
 # resource group of the function app assets
 $location = "westeurope"
-$storageAccountName = "sawebsite1fa2202003011" # storage account for the function app
+$storageAccountName = "sawebsite1fa120201221" # storage account for the function app
 $functionAppName = "fa-ntt-fa1ws1" # the function app
 
 # create the storage account for this function app

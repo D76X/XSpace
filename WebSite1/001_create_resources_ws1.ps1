@@ -11,8 +11,8 @@ az account set --subscription "Visual Studio Professional with MSDN"
 
 $location = "westeurope"
 $resourceGroup = "rg-WebSite1" # resource group of the website
-$storageAccountName = "sawebsite120200103" # Storage Account to hold the WebSite static content
-$appInsightsName = "ai-WebSite1-20200102"# Instance of Application Insight for the all site
+$storageAccountName = "sawebsite120201221" # Storage Account to hold the WebSite static content
+$appInsightsName = "ai-WebSite1-20201221"# Instance of Application Insight for the all site
 $errorPage = "error.html"
 $indexPage = "index.html"
 
@@ -26,7 +26,8 @@ az resource create `
   --properties '{\"Application_Type\":\"web\"}'
 
 # create the storage account to hold the static content of the site
-# Static websites are only supported for StorageV2 (general-purpose v2) accounts!
+# Static websites are only supported for StorageV2 (general-purpose v2) 
+# accounts!
 az storage account create `
   -n $storageAccountName `
   -l $location `

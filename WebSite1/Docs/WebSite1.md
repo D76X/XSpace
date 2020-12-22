@@ -29,9 +29,9 @@ The Architecture implemented in this project is inspired and based on a combinat
 
 The following are end points which can be used to test the function apps that make up the site.
 
-- [This is the entry point to the function in HttpTriggerCSharp.cs with the proper Query Parameter 'name' set to the value 'Davide'](https://fa-ntt-fa1ws1.azurewebsites.net/api/HttpTriggerCSharp?code=sM4PUqS92Vj0XcHFa0PtTlOwdx1o7CEd5mc5poh581njHbYcF3M%2Fhw%3D%3D&name=Davide)
+- [This is the entry point to the function in HttpTriggerCSharp.cs with the proper Query Parameter 'name' set to the value 'Davide'](https://fa-ntt-fa1ws1.azurewebsites.net/api/HttpTriggerCSharp?code=nBvNmPFahTU3G4FVaOxQFaaF0tN1JmXmGntanewm8fHB18crdoln8A==&name=Davide)
 
-- [This is the entry point to the function in HttpTriggerCSharp.cs without a value for the query parameter 'name'](https://fa-ntt-fa1ws1.azurewebsites.net/api/HttpTriggerCSharp?code=sM4PUqS92Vj0XcHFa0PtTlOwdx1o7CEd5mc5poh581njHbYcF3M%2Fhw%3D%3D)
+- [This is the entry point to the function in HttpTriggerCSharp.cs without a value for the query parameter 'name'](https://fa-ntt-fa1ws1.azurewebsites.net/api/HttpTriggerCSharp?code=nBvNmPFahTU3G4FVaOxQFaaF0tN1JmXmGntanewm8fHB18crdoln8A==)
 
 ---
 ## Storage Account For Static Content
@@ -45,13 +45,13 @@ On any existing **Storage Account Resource** the **Static website** feature avai
 
 The following is the endpoint to the **index.htm** of the static site **notice the reginal code z6** and the token **web** in the URI.
 
-- https://sawebsite120200103.z6.web.core.windows.net/
+- https://sawebsite120201221.z6.web.core.windows.net/
 
 The same document is accessible at the following URL but in this case there is no reference to the regional code and the **$web** becomes part of the path in the URI to the resource.
 
-- https://sawebsite120200103.blob.core.windows.net/$web/index.html
+- https://sawebsite120201221.blob.core.windows.net/$web/index.html
 
-The former URL is a feature of the **Static Web Site** set-up of the storage account itself. This Azure feature has been enabled on the **sawebsite120200103** Storage Account and provides an endpoint to the index.html of the static site.
+The former URL is a feature of the **Static Web Site** set-up of the storage account itself. This Azure feature has been enabled on the **sawebsite120201221** Storage Account and provides an endpoint to the index.html of the static site.
 
 The latter is the URL to the blob **index.html** of the **$web** container. This URL may be used to retrieve **index.html** as long as the **access level on the container $web** is set to either **public or blob**. If such level is set back to **private** as it is the case by default then only the former URL can be used to access the **index.htm** resource. 
 
@@ -87,7 +87,7 @@ In order to set up proxies for some or all the functions in a **Azure Functions 
                 "methods": [ "GET" ],
                 "route": "/"
             },
-            "backendUri": "https://sawebsite120200103.z6.web.core.windows.net/"
+            "backendUri": "https://sawebsite120201221.z6.web.core.windows.net/"
         }
     }
 }
@@ -96,14 +96,18 @@ In order to set up proxies for some or all the functions in a **Azure Functions 
 
 In the code exerpt above which is taken from the file **proxies.json** a proxy with the **friendly name** _proxy1_ is placed in front of the route address of the function app **"/"**. 
 
+
 This proxy allows the following mappings.
 
 |Called URI|Proxied to URI|
 |:---:|:---:|
-|GET https://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120200103.z6.web.core.windows.net/|
-|GET http://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120200103.z6.web.core.windows.net/|
+|GET https://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120201221.z6.web.core.windows.net/|
+|GET http://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120201221.z6.web.core.windows.net/|
+|||
 
- The address https://sawebsite120200103.z6.web.core.windows.net/ in turn is the base address of a **Storage Account** on which the **Static Content** feature is enabled. This is tuen means that when teh proxy relays from the requested URI to its backend URI the **index.html** document in the **$web** blob container of this storage account is retrieved and returned to the caller. 
+<br/><br/>
+ 
+ The address https://sawebsite120201221.z6.web.core.windows.net/ in turn is the base address of a **Storage Account** on which the **Static Content** feature is enabled. This is tuen means that when teh proxy relays from the requested URI to its backend URI the **index.html** document in the **$web** blob container of this storage account is retrieved and returned to the caller. 
 
 
 #### Proxy Example 2
@@ -115,7 +119,7 @@ This proxy allows the following mappings.
                 "methods": [ "GET" ],
                 "route": "/{*restOfPath}"
             },
-            "backendUri": "https://sawebsite120200103.z6.web.core.windows.net/{restOfPath}"
+            "backendUri": "https://sawebsite120201221.z6.web.core.windows.net/{restOfPath}"
         }
         ...
 ```
