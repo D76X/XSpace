@@ -130,6 +130,28 @@ That is **functionappbaseaddress/test** is going to be prozied to **storageAccou
 
 ---
 
+# Powershell Scripts
+
+This solution makes use of a number of powershell scripts designed to illustrate the processes as part of the development lifecycle. These script may be used to 
+actually run an iteration of the lifecycle semi automatically. However, their purpose is actually illustrate the steps behind a more comprehensive process of
+automation.
+
+In order to run the script successfully set the path of the powershell shell to 
+folder where the *.ps1 reside as indicated below. Some of these script use relative
+paths to find assets they are concerned with thus they will not work if the powershell shell is not set to have the folder below as its working directory.
+
+```
+C:\VSProjects\XSpace\WebSite1
+```
+
+- 001_create_resources_ws1
+- 002_create_resources_fa1ws1
+- 003_deploy_fa1ws1
+- 004_sync_contents_to_sa_ws1
+- 005_sync_contents_to_sa_ws1_ni
+
+---
+
 ## Sync of the Contents Folder
 
 In this inmplementation a **WebSite1/Content** folder is used to hold all the static content of the site.
