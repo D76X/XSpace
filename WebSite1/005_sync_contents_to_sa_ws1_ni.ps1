@@ -8,10 +8,14 @@
 # with the same Service Principal.
 
 Refs
+# https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-authorize-azure-active-directory
+# https://www.youtube.com/watch?v=K_2yUH2FqaY
+# https://github.com/Azure/azure-storage-azcopy/issues/561
+# https://github.com/Azure/azure-storage-azcopy/issues/1160
 
 Connect-AzureRmAccount -Subscription "Visual Studio Professional with MSDN"
 
-$storageAccountName = "sawebsite120200103"
+$storageAccountName = "sawebsite120201221"
 $resourceGroup = "rg-WebSite1" # resource group of the website
 $storKey = (Get-AzureRmStorageAccountKey -ResourceGroupName $resourceGroup -Name $storageAccountName).Value[0]
 $storContext = New-AzureStorageContext -StorageAccountName $storageAccountName -StorageAccountKey $storKey
