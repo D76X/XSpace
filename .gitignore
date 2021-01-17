@@ -24,3 +24,7 @@ src/SpeedyLead.Server/openapi
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# Executables
+*.exe
+**/*.exe
+

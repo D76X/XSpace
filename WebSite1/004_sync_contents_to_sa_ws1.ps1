@@ -13,16 +13,22 @@
 # 5-When syncing between virtual directories, add a trailing slash to the path (refer to examples) if there's a blob with the same name as one of the virtual directories.
 
 # Refs
-# https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10
-# https://docs.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-sync?toc=/azure/storage/blobs/toc.json
 
-# Videos
+# Synchronize Files to Azure Blob Storage with AZCopy 
 # https://www.youtube.com/watch?v=K_2yUH2FqaY
 
-# Other Refs
-# https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-blobs
-# https://docs.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-copy
+# Get started with AzCopy
+# https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10
+
+# azcopy sync
+# https://docs.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy-sync?toc=/azure/storage/blobs/toc.json
+
+# Issues
+
+# Allow skipping files if the MD5 matches
 # https://github.com/Azure/azure-storage-azcopy/issues/470
+
+# sync from blob to local actually copies everything again and again?
 # https://github.com/Azure/azure-storage-azcopy/issues/220
 
 # Attain credentials for the current Powershell session by logging to the Azure AD
