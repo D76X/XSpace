@@ -1,9 +1,35 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29509.3
+VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite1FunctionApp1", "WebSite1FunctionApp1\WebSite1FunctionApp1.csproj", "{12DEBB12-1DAA-4734-A617-6B765B2B934E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fa1ws1", "FunctionApps\fa1ws1\fa1ws1.csproj", "{C337EB42-5E42-48B1-8ECB-003EF28B2CD7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{571AF8B8-E099-47B4-BE78-F4B523FA7FEF}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\RefArchitecture1.png = Docs\RefArchitecture1.png
+		Docs\WebSite1.md = Docs\WebSite1.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contents", "Contents", "{C9D35AA3-3153-44E5-8392-9B7B57899D0A}"
+	ProjectSection(SolutionItems) = preProject
+		Contents\error.html = Contents\error.html
+		Contents\index.html = Contents\index.html
+		Contents\test.html = Contents\test.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FunctionApps", "FunctionApps", "{E59AC437-D287-4CE0-B990-6EF0965E9C35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65400122-5A19-405A-9188-A0D695435169}"
+	ProjectSection(SolutionItems) = preProject
+		001_create_resources_ws1.ps1 = 001_create_resources_ws1.ps1
+		002_create_resources_fa1ws1.ps1 = 002_create_resources_fa1ws1.ps1
+		003_deploy_fa1ws1.ps1 = 003_deploy_fa1ws1.ps1
+		004_sync_contents_to_sa_ws1.ps1 = 004_sync_contents_to_sa_ws1.ps1
+		005_sync_contents_to_sa_ws1_ni.ps1 = 005_sync_contents_to_sa_ws1_ni.ps1
+		azcopy.exe = azcopy.exe
+		useful_excerpts.ps1 = useful_excerpts.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +37,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{12DEBB12-1DAA-4734-A617-6B765B2B934E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12DEBB12-1DAA-4734-A617-6B765B2B934E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12DEBB12-1DAA-4734-A617-6B765B2B934E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12DEBB12-1DAA-4734-A617-6B765B2B934E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C337EB42-5E42-48B1-8ECB-003EF28B2CD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C337EB42-5E42-48B1-8ECB-003EF28B2CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C337EB42-5E42-48B1-8ECB-003EF28B2CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C337EB42-5E42-48B1-8ECB-003EF28B2CD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C337EB42-5E42-48B1-8ECB-003EF28B2CD7} = {E59AC437-D287-4CE0-B990-6EF0965E9C35}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E5C6E5EC-BB4B-4B15-884B-E7616DC09B67}
+		SolutionGuid = {291DAFBF-104F-49FE-9AD7-4E311208AF70}
 	EndGlobalSection
 EndGlobal
