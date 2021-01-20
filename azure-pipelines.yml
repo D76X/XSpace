@@ -4,11 +4,11 @@
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- main
+- master
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '1f4ef2a5-825d-475d-a882-7b200de8b49a'
+  azureSubscription: '291fa2ef-a503-4f7b-8e3b-67ca3095f955'
 
   # Function app name
   functionAppName: 'fa-ntt-fa1ws1'
@@ -17,7 +17,7 @@ variables:
   vmImageName: 'vs2017-win2016'
 
   # Working Directory
-  workingDirectory: '$(System.DefaultWorkingDirectory)/WebSite1'
+  workingDirectory: 'WebSite1'  
 
 stages:
 - stage: Build
@@ -35,7 +35,7 @@ stages:
       inputs:
         command: 'build'
         projects: |
-          $(workingDirectory)/*.csproj
+          $(workingDirectory)/$(functionAppsDirectory)/*/*.csproj
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
     - task: ArchiveFiles@2
