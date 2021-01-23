@@ -44,7 +44,7 @@ stages:
     - task: AzureFileCopy@4
       displayName: 'synch static files to blob container' 
       inputs:            
-        SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents'                            
+        SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents/*'                            
         azureSubscription: '$(azureSubscription)'
         Destination: 'AzureBlob'
         storage: 'sawebsite120201221'
