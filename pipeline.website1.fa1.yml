@@ -41,6 +41,15 @@ stages:
           $(workingDirectory)/*.csproj
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
+    - task: AzureFileCopy@4
+      displayName: 'synch static files to blob container' 
+      inputs:            
+        SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents'                            
+        azureSubscription: '$(azureSubscription)'
+        Destination: 'AzureBlob'
+        storage: 'sawebsite120201221'
+        ContainerName: '$web'
+
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
@@ -77,13 +86,13 @@ stages:
               appType: functionApp
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-          - task: AzureFileCopy@4
-            displayName: 'synch static files to blob container' 
-            inputs:            
-              SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents'
-              azureSubscription: '$(azureSubscription)'
-              Destination: 'AzureBlob'
-              storage: 'sawebsite120201221'
-              ContainerName: '$web'
+          # - task: AzureFileCopy@4
+          #   displayName: 'synch static files to blob container' 
+          #   inputs:            
+          #     SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents'                            
+          #     azureSubscription: '$(azureSubscription)'
+          #     Destination: 'AzureBlob'
+          #     storage: 'sawebsite120201221'
+          #     ContainerName: '$web'
 
 
