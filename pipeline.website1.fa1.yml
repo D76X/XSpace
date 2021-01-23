@@ -49,6 +49,7 @@ stages:
         Destination: 'AzureBlob'
         storage: 'sawebsite120201221'
         ContainerName: '$web'
+         
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
