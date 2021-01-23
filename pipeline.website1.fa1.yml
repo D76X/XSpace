@@ -87,13 +87,3 @@ stages:
               appType: functionApp
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
-          # - task: AzureFileCopy@4
-          #   displayName: 'synch static files to blob container' 
-          #   inputs:            
-          #     SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents'                            
-          #     azureSubscription: '$(azureSubscription)'
-          #     Destination: 'AzureBlob'
-          #     storage: 'sawebsite120201221'
-          #     ContainerName: '$web'
-
-
