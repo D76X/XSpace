@@ -77,3 +77,12 @@ stages:
               appType: functionApp
               appName: $(functionAppName)
               package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+          - task: AzureFileCopy@4
+            inputs:
+              SourcePath: '$(System.DefaultWorkingDirectory)/WebSite1/Contents'
+              azureSubscription: '$(azureSubscription)'
+              Destination: 'AzureBlob'
+              storage: 'sawebsite120201221'
+              ContainerName: '$web'
+
+
