@@ -42,10 +42,10 @@ stages:
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
     - task: PowerShell@2
+      displayName: 'Synch static files to blob container'
       env: 
           AZCOPY_SPA_CLIENT_SECRET: $(AZCOPY_SPA_CLIENT_SECRET)  
-      inputs:
-        displayName: 'Synch static files to blob container'
+      inputs:        
         targetType: 'filePath'
         workingDirectory: $(System.DefaultWorkingDirectory)\Website1
         filePath: $(System.DefaultWorkingDirectory)\Website1\006_pipeline_fa1_sync.ps1                

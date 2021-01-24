@@ -20,16 +20,22 @@ Set-Location $scriptPath
 $sourcePath = "${scriptPath}\Contents"
 $storageAccountName = "sawebsite120201221"
 $containerName = '$web' # notice the '' to store the value as a literal!
+$destinationPath = "https://${storageAccountName}.blob.core.windows.net/${containerName}"
+
+Write-Host 'scriptPath' : $scriptPath
+Write-Host 'sourcePath' : $sourcePath
+Write-Host 'storageAccountName' : $storageAccountName
+Write-Host 'containerName' : $containerName
+Write-Host 'destinationPath' : $destinationPath
+Write-Host 'AZCOPY_SPA_CLIENT_SECRET' : $env:AZCOPY_SPA_CLIENT_SECRET
 
 azcopy.exe --version
-.\azcopy.exe login --service-principal `
+
+azcopy.exe login --service-principal `
 --application-id d6b56804-e02a-4ef4-a1b9-d8b5af9d4e6e `
 --tenant-id 981b07d1-b261-4c3e-a400-b86f7809d9bc
 
-$destinationPath = "https://${storageAccountName}.blob.core.windows.net/${containerName}"
-
-# notice that recursive is on by default
-.\azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false
+azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false
 
 # clean up the envs 
 $env:AZCOPY_SPA_CLIENT_SECRET=''
