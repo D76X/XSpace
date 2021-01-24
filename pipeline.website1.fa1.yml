@@ -47,7 +47,7 @@ stages:
       inputs:
         displayName: 'Synch static files to blob container'
         targetType: 'filePath'
-        filePath: $(System.DefaultWorkingDirectory)\006_pipeline.website1.fa1.sync_contents_to_sa_ws1_ni.ps1                
+        filePath: $(System.DefaultWorkingDirectory)\Website1\006_pipeline_fa1_sync.ps1                
 
     # Keep this task here until the community updates it to perform a synch instead of a copy    
     # - task: AzureFileCopy@4
