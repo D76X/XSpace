@@ -21,7 +21,7 @@ $sourcePath = "${scriptPath}\Contents"
 $storageAccountName = "sawebsite120201221"
 $containerName = '$web' # notice the '' to store the value as a literal!
 
-.\azcopy.exe --version
+azcopy.exe --version
 .\azcopy.exe login --service-principal `
 --application-id d6b56804-e02a-4ef4-a1b9-d8b5af9d4e6e `
 --tenant-id 981b07d1-b261-4c3e-a400-b86f7809d9bc
