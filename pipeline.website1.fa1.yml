@@ -34,21 +34,30 @@ stages:
 
     steps:
     - task: DotNetCoreCLI@2
-      displayName: Build
+      displayName: Build           
       inputs:
         command: 'build'
         projects: |
           $(workingDirectory)/*.csproj
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
-    - task: AzureFileCopy@4
-      displayName: 'Copy static files to blob container' 
-      inputs:            
-        SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents/*'                            
-        azureSubscription: '$(azureSubscription)'
-        Destination: 'AzureBlob'
-        storage: 'sawebsite120201221'
-        ContainerName: '$web'         
+    - task: PowerShell@2
+      env: 
+          AZCOPY_SPA_CLIENT_SECRET: $(AZCOPY_SPA_CLIENT_SECRET)  
+      inputs:
+        displayName: 'Synch static files to blob container'
+        targetType: 'filePath'
+        filePath: $(System.DefaultWorkingDirectory)\006_pipeline.website1.fa1.sync_contents_to_sa_ws1_ni.ps1                
+
+    # Keep this task here until the community updates it to perform a synch instead of a copy    
+    # - task: AzureFileCopy@4
+    #   displayName: 'Copy static files to blob container' 
+    #   inputs:            
+    #     SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents/*'                            
+    #     azureSubscription: '$(azureSubscription)'
+    #     Destination: 'AzureBlob'
+    #     storage: 'sawebsite120201221'
+    #     ContainerName: '$web'         
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
