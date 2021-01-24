@@ -42,14 +42,13 @@ stages:
         arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration Release
 
     - task: AzureFileCopy@4
-      displayName: 'synch static files to blob container' 
+      displayName: 'Copy static files to blob container' 
       inputs:            
         SourcePath: '$(Build.SourcesDirectory)/WebSite1/Contents/*'                            
         azureSubscription: '$(azureSubscription)'
         Destination: 'AzureBlob'
         storage: 'sawebsite120201221'
-        ContainerName: '$web'
-         
+        ContainerName: '$web'         
 
     - task: ArchiveFiles@2
       displayName: 'Archive files'
