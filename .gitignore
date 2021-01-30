@@ -28,3 +28,4 @@ src/SpeedyLead.Server/openapi
 *.exe
 **/*.exe
 
+WebSite1/Contents/web.config
