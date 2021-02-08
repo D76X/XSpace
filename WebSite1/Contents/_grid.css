@@ -3,41 +3,53 @@
 html, 
 body {
   height: 100%;
+  width: auto;
 }
 
 body {
+  border: 1px solid red;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: min-content;
-  gap: 1em;
-  margin: 1em;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.5em;
+  margin: 0.5em;
 }
 
 header, 
-footer {
+footer {  
   grid-column-start: 1;
   grid-column-end: -1;
 }
  
 aside {
+  background-color: rosybrown;
   grid-row-start: 2;
-  grid-row-end: span 2;
+  grid-row-end: span 1;
   grid-column-start: 1;
-  grid-column-end: 5;
+  grid-column-end: 5;  
 }
 
 nav {  
+  background-color: peru;
   grid-row-start: 2;
-  grid-row-end: span 2;
+  grid-row-end: span 1;
   grid-column-start: 9;
   grid-column-end: 13;
 }
 
 main {
+  background-color: palevioletred;
   grid-row-start: 2;
-  grid-row-end: span 2;
+  grid-row-end: span 1;
   grid-column-start: 5;
   grid-column-end: 9;
+}
+
+footer {
+  background-color: aquamarine;
+  grid-row-start: 3;
+  grid-row-end: span 1;
+  /* margin: 0.5em;   */
 }
 
 .cakes {
