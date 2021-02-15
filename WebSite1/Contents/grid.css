@@ -9,47 +9,38 @@ body {
 body {
   border: 1px solid red;
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto 1fr auto;
+  grid-template-areas: "header header header header header header"
+                       "nav main main main main aside"
+                       "footer footer footer footer footer footer";
   gap: 0.5em;
   margin: 0.5em;
 }
 
-header, 
-footer {  
-  grid-column-start: 1;
-  grid-column-end: -1;
+header {
+  grid-area: header;
+  grid-column: header-start / header-end;
 }
- 
+
+footer {  
+  background-color: aquamarine;
+  grid-area: footer;
+  grid-column: footer-start / footer-end;
+}
+
 aside {
   background-color: rosybrown;
-  grid-row-start: 2;
-  grid-row-end: span 1;
-  grid-column-start: 1;
-  grid-column-end: 5;  
+  grid-column: aside-start / aside-end;  
 }
 
 nav {  
   background-color: peru;
-  grid-row-start: 2;
-  grid-row-end: span 1;
-  grid-column-start: 9;
-  grid-column-end: 13;
+  grid-column: nav-start / nav-end;
 }
 
 main {
   background-color: palevioletred;
-  grid-row-start: 2;
-  grid-row-end: span 1;
-  grid-column-start: 5;
-  grid-column-end: 9;
-}
-
-footer {
-  background-color: aquamarine;
-  grid-row-start: 3;
-  grid-row-end: span 1;
-  /* margin: 0.5em;   */
+  grid-column: main-start / main-end;
 }
 
 .cakes {
