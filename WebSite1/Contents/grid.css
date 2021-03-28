@@ -1,16 +1,80 @@
+/* 
 * {
   border: 1px solid black;
+} 
+*/
+
+:root {
+  --red: #ff0000; 
+  --colorSearchBox : #f1f1f1;
+  --colorHeaderBackground: #F8F8F8;
 }
 
-html, body {
+html {
   height: 100%;
   width: auto;
+}
+
+body {
+  width: auto;
+}
+
+.logo {
+  background: url("logo.png") no-repeat;
+  width: 103px;
+  height: 77px;
+  display: block;
+  text-indent: -9999px;
+}
+
+.logo>img {
+  alt: "New Thinking Technologies";
+  grid-column: 1 / 2;
+}
+
+.searchbox {
+  grid-column: 2 / 3;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background: var(--colorSearchBox);
+  height: 3em;
+  justify-self: stretch;
+  align-self: center;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  align-self: center;
+}
+
+.menu {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 100;
+  right: 0;
+  bottom: 0;
+  width: 20vw;
+  height: 30vh;
+  list-style: none;
+  background: var(--colorHeaderBackground);
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;  
+}
+
+.menuShow {  
+  transform: translateY(5em);
 }
 
 /* 6 cols layout*/
 
 body {
-  border: 1px solid red;
+  /* border: 5px solid red; */
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-areas: "header header header header header header" "nav main main main main aside" "footer footer footer footer footer footer";
@@ -19,8 +83,14 @@ body {
 }
 
 header {
-  grid-area: header;
+  position: sticky;
+  top: 0;
+  min-height: 4em;
+  max-height: minmax(4em, auto);
+  background-color: var(--colorHeaderBackground);
   grid-column: header-start / header-end;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
 }
 
 footer {
@@ -40,7 +110,8 @@ nav {
 }
 
 main {
-  background-color: palevioletred;
+  /* background-color: palevioletred; */
+  overflow: auto;
   grid-column: main-start / main-end;
 }
 
@@ -48,7 +119,7 @@ main {
 
 @media screen and (min-width: 475px) and (max-width: 650px) {
   body {
-    border: 1px solid red;
+    /* border: 5px solid red; */
     display: grid;
     grid: auto-flow min-content / 2fr 1fr;
     grid-template-areas: "header header" "aside  nav" "main main" "footer footer";
@@ -56,7 +127,11 @@ main {
     margin: 0.5em;
   }
   header {
+    position: sticky;
+    top: 0;
     grid-area: header;
+    min-height: 4em;
+    max-height: minmax(4em, auto);
   }
   footer {
     grid-area: footer;
@@ -72,7 +147,8 @@ main {
   }
   main {
     grid-area: main;
-    background-color: palevioletred;
+    border: 5px solid yellow;
+    /* background-color: palevioletred; */
   }
 }
 
@@ -80,7 +156,7 @@ main {
 
 @media screen and (max-width: 475px) {
   body {
-    border: 1px solid red;
+    /* border: 5px solid red; */
     display: grid;
     grid: auto-flow min-content / 1fr;
     grid-template-areas: "header" "aside" "nav" "main" "footer";
@@ -89,6 +165,8 @@ main {
   }
   header {
     grid-area: header;
+    min-height: 4em;
+    max-height: minmax(4em, auto);
   }
   footer {
     grid-area: footer;
