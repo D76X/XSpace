@@ -6,6 +6,7 @@
 
 :root {
   --red: #ff0000; 
+  --yellow:  yellow;
   --colorSearchBox : #f1f1f1;
   --colorHeaderBackground: #F8F8F8;
 }
@@ -100,12 +101,14 @@ footer {
 }
 
 aside {
-  background-color: rosybrown;
+  /* background-color: rosybrown; */
+  background-color: var(--colorHeaderBackground);
   grid-column: aside-start / aside-end;
 }
 
 nav {
-  background-color: peru;
+  /* background-color: peru; */
+  background-color: var(--colorHeaderBackground);
   grid-column: nav-start / nav-end;
 }
 
@@ -139,15 +142,17 @@ main {
   }
   aside {
     grid-area: aside;
-    background-color: rosybrown;
+    /* background-color: rosybrown; */
+    background-color: var(--colorHeaderBackground);
   }
   nav {
     grid-area: nav;
-    background-color: peru;
+    /* background-color: peru; */
+    background-color: var(--colorHeaderBackground);
   }
   main {
     grid-area: main;
-    border: 5px solid yellow;
+    /* border: 5px solid  var(--yellow); */
     /* background-color: palevioletred; */
   }
 }
@@ -174,14 +179,16 @@ main {
   }
   aside {
     grid-area: aside;
-    background-color: rosybrown;
+    /* background-color: rosybrown; */
+    background-color: var(--colorHeaderBackground);
   }
   nav {
     grid-area: nav;
-    background-color: peru;
+    /* background-color: peru; */
+    background-color: var(--colorHeaderBackground);
   }
   main {
     grid-area: main;
-    background-color: palevioletred;
+    /* background-color: palevioletred; */
   }
 }
