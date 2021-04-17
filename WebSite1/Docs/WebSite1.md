@@ -102,8 +102,6 @@ This proxy allows the following mappings.
 |Called URI|Proxied to URI|
 |:---:|:---:|
 |GET https://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120201221.z6.web.core.windows.net/|
-|GET http://fa-ntt-fa1ws1.azurewebsites.net/|https://sawebsite120201221.z6.web.core.windows.net/|
-|||
 
 <br/><br/>
  
@@ -113,32 +111,55 @@ This proxy allows the following mappings.
 #### Proxy Example 2
 
 ```
-...
 "proxy2": {
             "matchCondition": {
                 "methods": [ "GET" ],
                 "route": "/{*restOfPath}"
             },
-            "backendUri": "https://sawebsite120201221.z6.web.core.windows.net/{restOfPath}"
-        }
-        ...
+            "backendUri": "https://sawebsite120201221.z6.web.core.windows.net/{restOfPath}",
+            "debug": false,
+            "disabled": false
+        }        ...
 ```
+
+This proxy allows the following mappings.
+
+|Called URI|Proxied to URI|
+|:---:|:---:|
+|GET https://fa-ntt-fa1ws1.azurewebsites.net/anytoken |https://sawebsite120201221.z6.web.core.windows.net/anytoken|
+
+---
+
 
 In this example a new proxy element named **proxy2** is added to the collection **"proxies"** in the **proxies.json** document. This new proxy makes use of the **{\*restOfPath}** parameter in the **route** so that any trailing parts of the path following the route address of the function app matches the value of this paramter. This value is then reused in the **backendUri** specification of the proxy to relay to the URI of the resource placed in the **$web** blob container holding the static content.
 
-That is **functionappbaseaddress/test** is going to be proxied to **storageAccountBaseAddress/test.html** and so on.
+That is **functionappbaseaddress/test** is going to be proxied to **storageAccountBaseAddress/test.html** and so on. If the asset **test.html** exists under the proxies base address to the storage account https://sawebsite120201221.z6.web.core.windows.net then the content of the blob **test.html** from the sorage account is retuned to the caller who invoked of the azure function.
+
+The **proxy2** is essential to **WebSite1** to work as enables the mechanism that allows any web page to retrieve its on associated assets such ass **CSS and JavaScript**. For example the following are valid proxied routes thanks to the **proxy2** rule and **404** would be returned for the corresponding resources if the rule is either removed or even disabled i.e. 
+by setting **"disabled": true** in its definition above.
+
+|Called URI|Proxied to URI|
+|:---:|:---:|
+|GET https://fa-ntt-fa1ws1.azurewebsites.net/index.js |https://sawebsite120201221.z6.web.core.windows.net/index.js|
+|GET https://fa-ntt-fa1ws1.azurewebsites.net/grid.css |https://sawebsite120201221.z6.web.core.windows.net/grid.css|
+
+You may try in the browser with the links in the table above to verify that the corresponding resources are proxed and returned to the browser. The same happens in the corresponding calling web pages at the URLs below used as a way of example.
+
+- https://fa-ntt-fa1ws1.azurewebsites.net
+- https://fa-ntt-fa1ws1.azurewebsites.net/about.html
+
 
 ---
 
 # Powershell Scripts
 
-This solution makes use of a number of powershell scripts designed to illustrate the processes as part of the development lifecycle. These script may be used to 
+This solution makes use of a number of powershell scripts designed to illustrate the processes as part of the development lifecycle. These scripts may be used to 
 actually run an iteration of the lifecycle semi automatically. However, their purpose is actually illustrate the steps behind a more comprehensive process of
 automation.
 
-In order to run the script successfully set the path of the powershell shell to 
-folder where the *.ps1 reside as indicated below. Some of these script use relative
-paths to find assets they are concerned with thus they will not work if the powershell shell is not set to have the folder below as its working directory.
+In order to run the script successfully set the path of the powershell shell to the
+folder where the *.ps1 reside as indicated below. Some of these scripts use relative
+paths to find assets they are concerned with thus they will not work if the powershell shell session is not set to have the folder below as its working directory.
 
 ```
 C:\VSProjects\XSpace\WebSite1
@@ -149,6 +170,7 @@ C:\VSProjects\XSpace\WebSite1
 - 003_deploy_fa1ws1
 - 004_sync_contents_to_sa_ws1
 - 005_sync_contents_to_sa_ws1_ni
+- 006_pipeline_fa1_sync.ps1
 
 ---
 
