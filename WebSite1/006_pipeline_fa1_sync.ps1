@@ -35,7 +35,7 @@ azcopy.exe login --service-principal `
 --application-id d6b56804-e02a-4ef4-a1b9-d8b5af9d4e6e `
 --tenant-id 981b07d1-b261-4c3e-a400-b86f7809d9bc
 
-azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false
+azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false --delete-destination=true
 
 # clean up the envs 
 $env:AZCOPY_SPA_CLIENT_SECRET=''

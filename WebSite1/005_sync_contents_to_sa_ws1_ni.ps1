@@ -154,7 +154,7 @@ $env:AZCOPY_SPA_CLIENT_SECRET=(Get-Content -Path $secretPath -TotalCount 1)
 $destinationPath = "https://${storageAccountName}.blob.core.windows.net/${containerName}"
 
 # notice that recursive is on by default
-.\azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false
+.\azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false --delete-destination=true
 
 # clean up the envs 
 $env:AZCOPY_SPA_CLIENT_SECRET=''
