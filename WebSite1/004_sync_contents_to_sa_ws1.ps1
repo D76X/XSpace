@@ -48,9 +48,9 @@ $scriptPath=Get-Location
 $sourcePath = "${scriptPath}\Contents"
 $containerName = '$web' # notice the '' to store the value as a literal!
 $destinationPath = "https://${storageAccountName}.blob.core.windows.net/${containerName}/${sasToken}"
-# notice that recursive is on by default
-C:\"Program Files"\AzCopy\azcopy.exe sync $sourcePath  $destinationPath --put-md5 --recursive=false
 
-
-
+C:\"Program Files"\AzCopy\azcopy.exe sync `
+"C:/VSProjects/XSpace/WebSite1/Contents"  `
+$destinationPath `
+--put-md5 --recursive=false --delete-destination=true
 
