@@ -17,7 +17,7 @@
             },
             "backendUri": "https://sawebsite120201221.z6.web.core.windows.net/{restOfPath}",
             "debug": false,
-            "disabled": true
+            "disabled": false
         }
     }
 }
