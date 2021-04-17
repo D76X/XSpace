@@ -107,7 +107,7 @@ This proxy allows the following mappings.
 
 <br/><br/>
  
- The address https://sawebsite120201221.z6.web.core.windows.net/ in turn is the base address of a **Storage Account** on which the **Static Content** feature is enabled. This is tuen means that when teh proxy relays from the requested URI to its backend URI the **index.html** document in the **$web** blob container of this storage account is retrieved and returned to the caller. 
+ The address https://sawebsite120201221.z6.web.core.windows.net/ in turn is the base address of a **Storage Account** on which the **Static Content** feature is enabled. This is turn means that when the proxy relays from the requested URI to its backend URI the **index.html** document in the **$web** blob container of this storage account is retrieved and returned to the caller. 
 
 
 #### Proxy Example 2
@@ -126,7 +126,7 @@ This proxy allows the following mappings.
 
 In this example a new proxy element named **proxy2** is added to the collection **"proxies"** in the **proxies.json** document. This new proxy makes use of the **{\*restOfPath}** parameter in the **route** so that any trailing parts of the path following the route address of the function app matches the value of this paramter. This value is then reused in the **backendUri** specification of the proxy to relay to the URI of the resource placed in the **$web** blob container holding the static content.
 
-That is **functionappbaseaddress/test** is going to be prozied to **storageAccountBaseAddress/test.html** and so on.
+That is **functionappbaseaddress/test** is going to be proxied to **storageAccountBaseAddress/test.html** and so on.
 
 ---
 
@@ -188,3 +188,10 @@ In the Powershell session it is now possible to invoke the execution of the scri
 As this particular script makes use of a **interactive authentication** the user who executes it is going to be prompted to enter their credentials on each run and verify their ID through MFA via their Authenitcator application that is installed on theuir phones.
 
 ---
+
+## Interact with BlobStorage in a Web Page
+
+
+
+---
+
