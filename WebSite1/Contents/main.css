@@ -1,8 +1,4 @@
-body {
-  /* background-color: lightblue; */
-}
-
-.button {
+/* .button {
   border: none;
   color: white;
   padding: 15px 32px;
@@ -20,4 +16,8 @@ body {
 
 .button2 {
   background-color: #008CBA;
+} */
+
+.articleCard {
+  border: 1px solid red;
 }
