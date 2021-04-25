@@ -3,3 +3,5 @@
 
 // https://www.tutorialsteacher.com/jquery/jquery-load-method
 $('#article1').load('/article1.html');
+$('#article2').load('/article2.html #title');
+$('#msgDiv').load('/demo.html #myHtmlContent');
