@@ -217,3 +217,60 @@ As this particular script makes use of a **interactive authentication** the user
 
 ---
 
+## Test the Azure Functions Locally
+
+https://app.pluralsight.com/course-player?clipId=0ae118c5-b6a3-4b32-bdf6-b957ee9f1c21
+https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Ccmd
+
+```
+> cd 'C:\VSProjects\XSpace\WebSite1\FunctionApps\fa1ws1'
+> func host start
+```
+
+It is possible to test the functions locally on Windows or on Linux using 
+
+- [Invoke-WebRequest](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.1)
+- [Curl]()
+
+Example 1
+
+```
+iwr -Method GET -Uri http://localhost:7071/api/HttpTriggerCSharp?name=Davide
+```
+
+Retunrs a 200 OK code abd the string `Hello, Davide from Function 1`.
+Notice that this invokation also exercises  `proxy-api` rule in `proxies/json`.
+The rule matches the `/api/{*restOfPath}` and proxies it to the same path as the original invokation
+`http://%WEBSITE_HOSTNAME%/api/{restOfPath}`. 
+Without this rule it would be inpossible to host any functions on the Function Apps that do not
+proxy to static content via the `proxy2`  
+
+Example 2
+
+```
+iwr -Method GET -Uri http://localhost:7071/api/HttpTriggerCSharp
+```
+
+An error is returned because the query string parameter `name=Davide` has not been specified.
+
+Example 3
+
+```
+iwr -Method GET -Uri http://localhost:7071/
+```
+
+The `proxy-root` rule in `proxies/json` is used on invokation.
+The rule routes to the `_index.html` on the blob storage used for the contents of the static website. 
+
+Example 4
+
+```
+iwr -Method GET -Uri http://localhost:7071/main.css
+```
+
+In this example the `hostname` of teh function app is not followed by any known api fragment
+such as in the `proxy-api` rule with `/api/{*restOfPath}`. 
+The call is therefore matched by the `proxy-static-content` and if the requested static content exists on the static website blob storage then it is reurned as raw data. 
+If the requested file `main.css` does not exists  on the static website blob storage then the invokation returns the error page that is set up for it.
+
+---
