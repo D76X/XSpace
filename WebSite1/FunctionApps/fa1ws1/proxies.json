@@ -1,7 +1,7 @@
 {
     "$schema": "http://json.schemastore.org/proxies",    
     "proxies": {
-        "proxy1": {
+        "proxy-root": {
             "matchCondition": {
                 "methods": [ "GET" ],
                 "route": "/"
@@ -10,7 +10,16 @@
             "debug": false,
             "disabled": false
         },
-        "proxy2": {
+        "proxy-api": {
+            "matchCondition": {
+                "methods": [ "GET" ],
+                "route": "/api/{*restOfPath}"
+            },
+            "backendUri": "http://%WEBSITE_HOSTNAME%/api/{restOfPath}",
+            "debug": false,
+            "disabled": false
+        },
+        "proxy-static-content": {
             "matchCondition": {
                 "methods": [ "GET" ],
                 "route": "/{*restOfPath}"
