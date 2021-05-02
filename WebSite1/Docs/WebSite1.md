@@ -222,9 +222,37 @@ As this particular script makes use of a **interactive authentication** the user
 https://app.pluralsight.com/course-player?clipId=0ae118c5-b6a3-4b32-bdf6-b957ee9f1c21
 https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows%2Ccsharp%2Ccmd
 
+It is possible to run function apps localy 
+
+1. From the menu option(s) i.e. `Run > Start Debugging` and similar variations
+2. By means of the `Azure Functions Core Tools`
+
 ```
 > cd 'C:\VSProjects\XSpace\WebSite1\FunctionApps\fa1ws1'
 > func host start
+```
+
+The following starts the function app locally with `'Access-Control-Allow-Origin' header set to * ` which
+enables all origins for CORS. The following post on Stackoverflow explains the issue well.
+
+[Configure CORS for Azure Functions Local Host](https://stackoverflow.com/questions/42378987/configure-cors-for-azure-functions-local-host/42750529#42750529)  
+[Enabling CORS for Testing Azure Functions Locally](https://markheath.net/post/enable-cors-local-test-azure-functions)  
+
+
+```
+> func host start --cors *
+```
+
+The same can be achieved by specifying the value of the `Host.CORS` property in  `local.settings.json`.
+
+```
+{
+  "Values": {
+  },
+  "Host": {
+    "CORS": "*"
+  }
+}
 ```
 
 It is possible to test the functions locally on Windows or on Linux using 
