@@ -17,18 +17,29 @@ namespace fa1ws1
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
-                log.LogInformation("C# HTTP trigger GetMetadata");
-                // do something here!
-                log.LogInformation("C# HTTP trigger GetMetadata processed the request.");
-                return new OkObjectResult("C# HTTP trigger GetMetadata returned value!");
+            log.LogInformation("C# HTTP trigger GetMetadata");
+            // do something here!
+            log.LogInformation("C# HTTP trigger GetMetadata processed the request.");
+            
+            //return new OkObjectResult("C# HTTP trigger GetMetadata returned value!");
+            return new JsonResult(new Metadata(){ Type="type",Name="name",Value="value"}); 
         }
     }
 
+    // post input
+    public class SearchQuery
+    {
+        public string Type { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
+
+    // output
     public class Metadata
     {
-        public string Type {get; set;}
-        public string Name {get; set;}
-        public string Value {get; set;}
+        public string Type { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }
 
