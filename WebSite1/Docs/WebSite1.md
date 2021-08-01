@@ -49,11 +49,12 @@ The following is the endpoint to the **index.htm** of the static site **notice t
 
 The same document is accessible at the following URL but in this case there is no reference to the regional code and the **$web** becomes part of the path in the URI to the resource.
 
-- https://sawebsite120201221.blob.core.windows.net/$web/index.html
+- https://sawebsite120201221.z6.web.core.windows.net/
+- https://sawebsite120201221.blob.core.windows.net/$web/_index.html
 
-The former URL is a feature of the **Static Web Site** set-up of the storage account itself. This Azure feature has been enabled on the **sawebsite120201221** Storage Account and provides an endpoint to the index.html of the static site.
+The former URL is a feature of the **Static Web Site** set-up of the storage account itself. This Azure feature has been enabled on the **sawebsite120201221** Storage Account and provides an endpoint to the _index.html of the static site.
 
-The latter is the URL to the blob **index.html** of the **$web** container. This URL may be used to retrieve **index.html** as long as the **access level on the container $web** is set to either **public or blob**. If such level is set back to **private** as it is the case by default then only the former URL can be used to access the **index.htm** resource. 
+The latter is the URL to the blob **_index.html** of the **$web** container. This URL may be used to retrieve **_index.html** as long as the **access level on the container $web** is set to either **public or blob**. If such level is set back to **private** as it is the case by default then only the former URL can be used to access the **index.htm** resource. 
 
 ---
 
@@ -111,7 +112,7 @@ This proxy allows the following mappings.
 #### Proxy Example 2
 
 ```
-"proxy2": {
+"proxy-static-content": {
             "matchCondition": {
                 "methods": [ "GET" ],
                 "route": "/{*restOfPath}"
@@ -131,11 +132,11 @@ This proxy allows the following mappings.
 ---
 
 
-In this example a new proxy element named **proxy2** is added to the collection **"proxies"** in the **proxies.json** document. This new proxy makes use of the **{\*restOfPath}** parameter in the **route** so that any trailing parts of the path following the route address of the function app matches the value of this paramter. This value is then reused in the **backendUri** specification of the proxy to relay to the URI of the resource placed in the **$web** blob container holding the static content.
+In this example a new proxy element named **proxy-static-content** is added to the collection **"proxies"** in the **proxies.json** document. This new proxy makes use of the **{\*restOfPath}** parameter in the **route** so that any trailing parts of the path following the route address of the function app matches the value of this paramter. This value is then reused in the **backendUri** specification of the proxy to relay to the URI of the resource placed in the **$web** blob container holding the static content.
 
-That is **functionappbaseaddress/test** is going to be proxied to **storageAccountBaseAddress/test.html** and so on. If the asset **test.html** exists under the proxies base address to the storage account https://sawebsite120201221.z6.web.core.windows.net then the content of the blob **test.html** from the sorage account is retuned to the caller who invoked of the azure function.
+That is **functionappbaseaddress/test** is going to be proxied to **storageAccountBaseAddress/test.html** and so on. If the asset **test.html** exists under the proxies base address to the storage account https://sawebsite120201221.z6.web.core.windows.net then the content of the blob **test.html** from the sorage account is retuned to the caller who invoked the azure function.
 
-The **proxy2** is essential to **WebSite1** to work as enables the mechanism that allows any web page to retrieve its on associated assets such ass **CSS and JavaScript**. For example the following are valid proxied routes thanks to the **proxy2** rule and **404** would be returned for the corresponding resources if the rule is either removed or even disabled i.e. 
+The **proxy-static-content** is essential to **WebSite1** to work as enables the mechanism that allows any web page to retrieve its on associated assets such as **CSS and JavaScript**. For example, the following are valid proxied routes thanks to the **proxy-static-content** rule and **404** would be returned for the corresponding resources if the rule were either removed or even disabled i.e. 
 by setting **"disabled": true** in its definition above.
 
 |Called URI|Proxied to URI|
@@ -195,7 +196,7 @@ C:\"Program Files"\AzCopy\azcopy.exe
 
 More information is available in the Refs embedded in the script file.
 
-In order to run the script use **ConEmu** and the command below to start a new session of the **Powwrshell** console in **admin** mode and make sure the working directory of the script is ```C:\VSProjects\XSpace\WebSite1```.
+In order to run the script use **ConEmu** and the command below to start a new session of the **Powershell** console in **admin** mode and make sure the working directory of the script is ```C:\VSProjects\XSpace\WebSite1```.
 
 ```
 powershell -new_console:a
@@ -207,7 +208,7 @@ In the Powershell session it is now possible to invoke the execution of the scri
 .\sync_contents_to_sa_ws1.ps1
 ```
 
-As this particular script makes use of a **interactive authentication** the user who executes it is going to be prompted to enter their credentials on each run and verify their ID through MFA via their Authenitcator application that is installed on theuir phones.
+As this particular script makes use of a **interactive authentication** the user who executes it is going to be prompted to enter their credentials on each run and verify their ID through MFA via their Authenitcator application that is installed on their phones.
 
 ---
 
@@ -266,12 +267,22 @@ Example 1
 iwr -Method GET -Uri http://localhost:7071/api/HttpTriggerCSharp?name=Davide
 ```
 
-Retunrs a 200 OK code abd the string `Hello, Davide from Function 1`.
-Notice that this invokation also exercises  `proxy-api` rule in `proxies/json`.
+Returns a 200 OK code and the string 
+
+```
+Hello, Davide from Function 1
+```
+
+Notice that this invokation also exercises  `proxy-api` rule in `proxies.json`.
+
 The rule matches the `/api/{*restOfPath}` and proxies it to the same path as the original invokation
-`http://%WEBSITE_HOSTNAME%/api/{restOfPath}`. 
-Without this rule it would be inpossible to host any functions on the Function Apps that do not
-proxy to static content via the `proxy2`  
+
+```
+http://%WEBSITE_HOSTNAME%/api/{restOfPath} 
+```
+
+Without this rule it would be impossible to host any functions on the Function Apps that do not
+proxy to static content via the `proxy-static-content`  
 
 Example 2
 
@@ -287,7 +298,8 @@ Example 3
 iwr -Method GET -Uri http://localhost:7071/
 ```
 
-The `proxy-root` rule in `proxies/json` is used on invokation.
+The `proxy-root` rule in `proxies.json` is used on invokation.
+
 The rule routes to the `_index.html` on the blob storage used for the contents of the static website. 
 
 Example 4
@@ -296,8 +308,7 @@ Example 4
 iwr -Method GET -Uri http://localhost:7071/main.css
 ```
 
-In this example the `hostname` of teh function app is not followed by any known api fragment
-such as in the `proxy-api` rule with `/api/{*restOfPath}`. 
+In this example the `hostname` of the function app **is not followed by any known api fragment** such as in the `proxy-api` rule with `/api/{*restOfPath}`. 
 The call is therefore matched by the `proxy-static-content` and if the requested static content exists on the static website blob storage then it is reurned as raw data. 
 If the requested file `main.css` does not exists  on the static website blob storage then the invokation returns the error page that is set up for it.
 
